@@ -2,9 +2,12 @@ import numpy as np
 
 def wavg(elements, weights):
     """ Finds weighted average """
-    elements = np.asmatrix(elements)
-    weights = np.asmatrix(weights).T
     np.sum(elements*weights) / np.sum(weights)
+
+def exclude(lst, i):
+    if i == 0:
+        return lst[i+1:]
+    return lst[:i] + lst[i+1:]
 
 class Kernel:
     """
@@ -13,11 +16,18 @@ class Kernel:
     """
     @staticmethod
     def Gaussian(x):
-        return 1 / np.sqrt(2 * np.pi) * np.exp(- x**2 / 2)
+        return 1. / np.sqrt(2 * np.pi) * np.exp(- x**2 / 2)
 
     @staticmethod
     def Epanechnikov(x):
-        return 3 / 4 * max(1 - x**2, 0)
+        return 3. / 4. * max(1. - x**2, 0)
+
+    @staticmethod
+    def Rectangular(x):
+        if(abs(x)<=1):
+            return 1./2.;
+        else:
+            return 0;
 
 class Norm:
     """

@@ -2,12 +2,11 @@ import numpy as np
 
 def wavg(elements, weights):
     """ Finds weighted average """
-    np.sum(elements*weights) / np.sum(weights)
-
-def exclude(lst, i):
-    if i == 0:
-        return lst[i+1:]
-    return lst[:i] + lst[i+1:]
+    r = 0
+    sum = np.sum(weights)
+    for x,w in zip(elements, weights):
+        r += x*w / sum
+    return r
 
 class Kernel:
     """
